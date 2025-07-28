@@ -1,753 +1,1286 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOOGI TECHNOLOGIES | Innovating Africa's Digital Future</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .floating-card {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .floating-card:nth-child(2) {
-            animation-delay: -2s;
-        }
-        
-        .floating-card:nth-child(3) {
-            animation-delay: -4s;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .typewriter {
-            overflow: hidden;
-            border-right: 3px solid #667eea;
-            white-space: nowrap;
-            margin: 0 auto;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-        }
-        
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #667eea; }
-        }
-        
-        .pulse-glow {
-            animation: pulseGlow 2s infinite;
-        }
-        
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.6); }
-        }
-        
-        .scroll-indicator {
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-        
-        .counter {
-            font-weight: 700;
-            font-size: 2.5rem;
-            color: #667eea;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOOGI TECHNOLOGIES | Digital Innovation Hub</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Swiper JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    /* Custom Styles */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+    }
+    
+    /* Glass Morphism */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .dark .glass-card {
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Floating Animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .floating { animation: float 6s ease-in-out infinite; }
+    
+    /* Ripple Effect */
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+    .ripple-effect {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.7);
+      transform: scale(0);
+      animation: ripple 600ms linear;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to { transform: scale(4); opacity: 0; }
+    }
+    
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f8fafc;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease;
+    }
+    .dark #preloader { background: #0f172a; }
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 5px solid var(--primary);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      animation: rotation 1s linear infinite;
+    }
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Marquee Animation */
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-250px * 6)); }
+    }
+    
+    .services-marquee {
+      height: 400px;
+      margin: auto;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+    
+    .services-marquee::before,
+    .services-marquee::after {
+      content: "";
+      height: 100%;
+      position: absolute;
+      width: 100px;
+      z-index: 2;
+    }
+    
+    .services-marquee::after {
+      right: 0;
+      top: 0;
+      transform: rotateZ(180deg);
+    }
+    
+    .services-marquee::before {
+      left: 0;
+      top: 0;
+    }
+    
+    .services-track {
+      animation: scroll 40s linear infinite;
+      display: flex;
+      width: calc(250px * 12);
+    }
+    
+    .service-slide {
+      height: 380px;
+      width: 350px;
+      flex-shrink: 0;
+      margin: 0 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .service-slide:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .services-marquee {
+        height: auto;
+        overflow-x: auto;
+        padding-bottom: 20px;
+      }
+      
+      .services-track {
+        animation: none;
+        width: auto;
+        padding: 0 20px;
+      }
+      
+      .service-slide {
+        width: 300px;
+        height: auto;
+      }
+    }
+    
+    /* Gradient borders */
+    .gradient-border {
+      position: relative;
+      border-radius: 1rem;
+    }
+    
+    .gradient-border::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      z-index: -1;
+      background: linear-gradient(45deg, #2563eb, #8b5cf6, #ec4899);
+      background-size: 200% 200%;
+      border-radius: 1rem;
+      animation: gradient 8s ease infinite;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Hover effects */
+    .hover-zoom {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-zoom:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    /* Blob animation */
+    @keyframes animate-blob {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
+    
+    .animate-blob {
+      animation: animate-blob 7s infinite;
+    }
+    
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+    
+    .animation-delay-4000 {
+      animation-delay: 4s;
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-white overflow-x-hidden">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-effect transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <span class="text-2xl font-bold gradient-text">
-                            <i class="fas fa-code text-blue-400 mr-2"></i>GOOGI
-                        </span>
-                    </div>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="hover:text-blue-400 transition-colors duration-300">Home</a>
-                    <a href="#services" class="hover:text-blue-400 transition-colors duration-300">Services</a>
-                    <a href="#about" class="hover:text-blue-400 transition-colors duration-300">About</a>
-                    <a href="#projects" class="hover:text-blue-400 transition-colors duration-300">Projects</a>
-                    <a href="#contact" class="hover:text-blue-400 transition-colors duration-300">Contact</a>
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button class="text-white hover:text-blue-400" id="mobile-menu-btn">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div class="md:hidden hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 glass-effect">
-                <a href="#home" class="block px-3 py-2 hover:text-blue-400">Home</a>
-                <a href="#services" class="block px-3 py-2 hover:text-blue-400">Services</a>
-                <a href="#about" class="block px-3 py-2 hover:text-blue-400">About</a>
-                <a href="#projects" class="block px-3 py-2 hover:text-blue-400">Projects</a>
-                <a href="#contact" class="block px-3 py-2 hover:text-blue-400">Contact</a>
-            </div>
-        </div>
-    </nav>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-500">
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 gradient-bg opacity-10"></div>
-        <div class="absolute inset-0">
-            <div class="floating-card absolute top-20 left-10 w-20 h-20 bg-blue-500 opacity-20 rounded-full"></div>
-            <div class="floating-card absolute top-40 right-20 w-16 h-16 bg-purple-500 opacity-20 rounded-full"></div>
-            <div class="floating-card absolute bottom-40 left-1/4 w-12 h-12 bg-indigo-500 opacity-20 rounded-full"></div>
+  <!-- Sticky Navbar -->
+  <nav id="navbar" class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm transition-all duration-300">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="#" class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">G</div>
+        <span class="text-xl font-bold text-gray-800 dark:text-white">GOOGI TECHNOLOGIES</span>
+      </a>
+      <div class="hidden md:flex space-x-8">
+        <a href="#home" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Home</a>
+        <a href="#services" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Services</a>
+        <a href="#achievements" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Achievements</a>
+        <a href="#testimonials" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Testimonials</a>
+        <a href="#contact" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Contact</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <i class="fas fa-moon dark:hidden"></i>
+          <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+        </button>
+        <button class="md:hidden" id="mobile-menu-button">
+          <i class="fas fa-bars text-gray-600 dark:text-gray-300"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 px-6 py-4">
+      <div class="flex flex-col space-y-4">
+        <a href="#home" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Home</a>
+        <a href="#services" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Services</a>
+        <a href="#achievements" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Achievements</a>
+        <a href="#testimonials" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Testimonials</a>
+        <a href="#contact" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 3D Animated Hero Section -->
+  <section id="home" class="relative min-h-screen flex items-center overflow-hidden pt-20">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden z-0">
+      <div class="absolute top-20 left-20 w-40 h-40 bg-blue-600 rounded-full filter blur-3xl opacity-20 animate-blob"></div>
+      <div class="absolute bottom-20 right-20 w-60 h-60 bg-purple-600 rounded-full filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div class="absolute top-1/2 right-1/4 w-48 h-48 bg-pink-600 rounded-full filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+    </div>
+    
+    <div class="container mx-auto px-6 py-12 relative z-10">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2" data-aos="fade-right">
+          <h1 class="text-4xl md:text-6xl font-bold text-gray-800 dark:text-white mb-6 leading-tight">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Innovating</span> Africa's Digital Future
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
+            Tanzania's leading technology hub specializing in cutting-edge software development, telecom solutions, and startup incubation.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#contact" class="ripple px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-bold hover:shadow-lg transition-all transform hover:-translate-y-1">
+              Partner With Us
+            </a>
+            <a href="#services" class="ripple px-8 py-3 border-2 border-blue-600 text-blue-600 dark:text-white rounded-lg font-bold hover:bg-blue-50 dark:hover:bg-gray-800 transition">
+              <i class="fas fa-play-circle mr-2"></i> Watch Showreel
+            </a>
+          </div>
+          
+          <!-- Trust Badges -->
+          <div class="mt-12 flex flex-wrap items-center gap-6">
+            <div class="flex items-center space-x-2">
+              <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                <i class="fas fa-check text-green-600 dark:text-green-300"></i>
+              </div>
+              <span class="text-gray-600 dark:text-gray-300">5+ Years Experience</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+                <i class="fas fa-award text-blue-600 dark:text-blue-300"></i>
+              </div>
+              <span class="text-gray-600 dark:text-gray-300">Certified Experts</span>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 mt-12 md:mt-0" data-aos="fade-left">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                 alt="Tech Innovation" 
+                 class="rounded-2xl shadow-2xl floating transform transition-transform duration-1000 hover:rotate-1">
+            <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-purple-600 rounded-2xl shadow-xl -z-10"></div>
+            <div class="absolute -top-6 -right-6 w-24 h-24 bg-blue-600 rounded-xl shadow-xl -z-10"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Counter -->
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-4xl font-bold counter" data-target="78">0</h3>
+          <p class="text-blue-100">Projects Delivered</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="200">
+          <h3 class="text-4xl font-bold counter" data-target="24">0</h3>
+          <p class="text-blue-100">Startups Incubated</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="300">
+          <h3 class="text-4xl font-bold counter" data-target="36">0</h3>
+          <p class="text-blue-100">Expert Team</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="400">
+          <h3 class="text-4xl font-bold counter" data-target="5">0</h3>
+          <p class="text-blue-100">Years Experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-blue-600 font-bold">WHAT WE OFFER</span>
+        <h2 class="text-3xl font-bold text-gray-800 dark:text-white mt-2">Our <span class="text-blue-600">Premium Services</span></h2>
+        <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-4">
+          Cutting-edge solutions tailored to propel your business into the digital future
+        </p>
+      </div>
+      
+      <!-- Desktop Marquee View -->
+      <div class="hidden lg:block">
+        <div class="services-marquee">
+          <div class="services-track">
+            <!-- Duplicate slides for infinite loop -->
+            <!-- Service 1 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-blue-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-code text-3xl text-blue-600 dark:text-blue-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Custom Software</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Tailored solutions designed specifically for your business needs and workflows.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Custom Software" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-blue-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-purple-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-mobile-alt text-3xl text-purple-600 dark:text-purple-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Mobile Apps</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Cross-platform mobile applications with native performance and beautiful UI.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Mobile Apps" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-purple-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-green-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-cloud text-3xl text-green-600 dark:text-green-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Cloud Solutions</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Scalable cloud infrastructure and services to grow with your business.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1472&q=80" 
+                       alt="Cloud Solutions" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-green-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-red-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-shield-alt text-3xl text-red-600 dark:text-red-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Cyber Security</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Comprehensive protection for your digital assets and infrastructure.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Cyber Security" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-red-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-yellow-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-lightbulb text-3xl text-yellow-600 dark:text-yellow-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Tech Incubation</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Nurturing Tanzania's most promising tech startups with funding and mentorship.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Tech Incubation" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-yellow-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 6 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-indigo-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-tower-broadcast text-3xl text-indigo-600 dark:text-indigo-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Telecom Solutions</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Next-generation connectivity and infrastructure for modern businesses.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Telecom Solutions" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-indigo-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Duplicates for seamless looping -->
+            <!-- Service 1 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-blue-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-code text-3xl text-blue-600 dark:text-blue-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Custom Software</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Tailored solutions designed specifically for your business needs and workflows.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Custom Software" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-blue-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-purple-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-mobile-alt text-3xl text-purple-600 dark:text-purple-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Mobile Apps</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Cross-platform mobile applications with native performance and beautiful UI.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Mobile Apps" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-purple-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-green-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-cloud text-3xl text-green-600 dark:text-green-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Cloud Solutions</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Scalable cloud infrastructure and services to grow with your business.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1472&q=80" 
+                       alt="Cloud Solutions" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-green-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-red-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-shield-alt text-3xl text-red-600 dark:text-red-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Cyber Security</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Comprehensive protection for your digital assets and infrastructure.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Cyber Security" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-red-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-yellow-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-lightbulb text-3xl text-yellow-600 dark:text-yellow-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Tech Incubation</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Nurturing Tanzania's most promising tech startups with funding and mentorship.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Tech Incubation" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-yellow-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Service 6 -->
+            <div class="service-slide">
+              <div class="gradient-border h-full">
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group">
+                  <div class="absolute -right-10 -top-10 w-32 h-32 bg-indigo-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-6">
+                    <i class="fas fa-tower-broadcast text-3xl text-indigo-600 dark:text-indigo-300"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Telecom Solutions</h3>
+                  <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Next-generation connectivity and infrastructure for modern businesses.
+                  </p>
+                  <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                       alt="Telecom Solutions" 
+                       class="w-full h-32 object-cover rounded-lg mb-4">
+                  <a href="#" class="text-indigo-600 font-semibold inline-flex items-center group-hover:underline">
+                    Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile/Tablet Grid View -->
+      <div class="lg:hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Service 1 -->
+          <div class="gradient-border">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group hover-zoom">
+              <div class="absolute -right-10 -top-10 w-32 h-32 bg-blue-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
+                <i class="fas fa-code text-3xl text-blue-600 dark:text-blue-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Custom Software</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                Tailored solutions designed specifically for your business needs and workflows.
+              </p>
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                   alt="Custom Software" 
+                   class="w-full h-32 object-cover rounded-lg mb-4">
+              <a href="#" class="text-blue-600 font-semibold inline-flex items-center group-hover:underline">
+                Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Service 2 -->
+          <div class="gradient-border">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group hover-zoom">
+              <div class="absolute -right-10 -top-10 w-32 h-32 bg-purple-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-6">
+                <i class="fas fa-mobile-alt text-3xl text-purple-600 dark:text-purple-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Mobile Apps</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                Cross-platform mobile applications with native performance and beautiful UI.
+              </p>
+              <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                   alt="Mobile Apps" 
+                   class="w-full h-32 object-cover rounded-lg mb-4">
+              <a href="#" class="text-purple-600 font-semibold inline-flex items-center group-hover:underline">
+                Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Service 3 -->
+          <div class="gradient-border">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group hover-zoom">
+              <div class="absolute -right-10 -top-10 w-32 h-32 bg-green-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-6">
+                <i class="fas fa-cloud text-3xl text-green-600 dark:text-green-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Cloud Solutions</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                Scalable cloud infrastructure and services to grow with your business.
+              </p>
+              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1472&q=80" 
+                   alt="Cloud Solutions" 
+                   class="w-full h-32 object-cover rounded-lg mb-4">
+              <a href="#" class="text-green-600 font-semibold inline-flex items-center group-hover:underline">
+                Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Service 4 -->
+          <div class="gradient-border">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group hover-zoom">
+              <div class="absolute -right-10 -top-10 w-32 h-32 bg-red-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mb-6">
+                <i class="fas fa-shield-alt text-3xl text-red-600 dark:text-red-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Cyber Security</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                Comprehensive protection for your digital assets and infrastructure.
+              </p>
+              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                   alt="Cyber Security" 
+                   class="w-full h-32 object-cover rounded-lg mb-4">
+              <a href="#" class="text-red-600 font-semibold inline-flex items-center group-hover:underline">
+                Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Service 5 -->
+          <div class="gradient-border">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group hover-zoom">
+              <div class="absolute -right-10 -top-10 w-32 h-32 bg-yellow-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center mb-6">
+                <i class="fas fa-lightbulb text-3xl text-yellow-600 dark:text-yellow-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Tech Incubation</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                Nurturing Tanzania's most promising tech startups with funding and mentorship.
+              </p>
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                   alt="Tech Incubation" 
+                   class="w-full h-32 object-cover rounded-lg mb-4">
+              <a href="#" class="text-yellow-600 font-semibold inline-flex items-center group-hover:underline">
+                Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Service 6 -->
+          <div class="gradient-border">
+            <div class="bg-white dark:bg-gray-900 rounded-xl p-6 h-full relative overflow-hidden group hover-zoom">
+              <div class="absolute -right-10 -top-10 w-32 h-32 bg-indigo-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-6">
+                <i class="fas fa-tower-broadcast text-3xl text-indigo-600 dark:text-indigo-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Telecom Solutions</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                Next-generation connectivity and infrastructure for modern businesses.
+              </p>
+              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                   alt="Telecom Solutions" 
+                   class="w-full h-32 object-cover rounded-lg mb-4">
+              <a href="#" class="text-indigo-600 font-semibold inline-flex items-center group-hover:underline">
+                Learn More <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- View All Button -->
+      <div class="text-center mt-12" data-aos="fade-up">
+        <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300">
+          View All Services
+          <svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Achievements/Certificates -->
+  <section id="achievements" class="py-20 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-blue-600 font-bold">OUR CREDENTIALS</span>
+        <h2 class="text-3xl font-bold text-gray-800 dark:text-white mt-2">Certifications <span class="text-blue-600">& Awards</span></h2>
+        <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-4">
+          Recognized for excellence in technology innovation and service delivery
+        </p>
+      </div>
+      
+      <!-- Swiper Carousel -->
+      <div class="swiper certificates-swiper" data-aos="fade-up">
+        <div class="swiper-wrapper pb-12">
+          <!-- Slide 1 -->
+          <div class="swiper-slide">
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover-zoom">
+              <div class="w-full h-48 bg-blue-100 dark:bg-blue-900 rounded-xl mb-4 flex items-center justify-center">
+                <i class="fas fa-award text-6xl text-blue-600 dark:text-blue-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Microsoft Gold Partner</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">Certified for cloud solutions and enterprise development</p>
+              <span class="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full text-sm">2023</span>
+            </div>
+          </div>
+          
+          <!-- Slide 2 -->
+          <div class="swiper-slide">
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover-zoom">
+              <div class="w-full h-48 bg-purple-100 dark:bg-purple-900 rounded-xl mb-4 flex items-center justify-center">
+                <i class="fas fa-medal text-6xl text-purple-600 dark:text-purple-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Best Tech Startup 2022</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">Awarded by Tanzania Innovation Week</p>
+              <span class="inline-block px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full text-sm">2022</span>
+            </div>
+          </div>
+          
+          <!-- Slide 3 -->
+          <div class="swiper-slide">
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover-zoom">
+              <div class="w-full h-48 bg-green-100 dark:bg-green-900 rounded-xl mb-4 flex items-center justify-center">
+                <i class="fas fa-certificate text-6xl text-green-600 dark:text-green-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">AWS Certified Partner</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">Recognized for cloud infrastructure excellence</p>
+              <span class="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 rounded-full text-sm">2021</span>
+            </div>
+          </div>
+          
+          <!-- Slide 4 -->
+          <div class="swiper-slide">
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover-zoom">
+              <div class="w-full h-48 bg-yellow-100 dark:bg-yellow-900 rounded-xl mb-4 flex items-center justify-center">
+                <i class="fas fa-trophy text-6xl text-yellow-600 dark:text-yellow-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Top Innovator Award</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">East Africa Tech Awards 2020</p>
+              <span class="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300 rounded-full text-sm">2020</span>
+            </div>
+          </div>
+          
+          <!-- Slide 5 -->
+          <div class="swiper-slide">
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover-zoom">
+              <div class="w-full h-48 bg-red-100 dark:bg-red-900 rounded-xl mb-4 flex items-center justify-center">
+                <i class="fas fa-shield-alt text-6xl text-red-600 dark:text-red-300"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Cyber Security Excellence</h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">Awarded for innovative security solutions</p>
+              <span class="inline-block px-3 py-1 bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 rounded-full text-sm">2021</span>
+            </div>
+          </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-blue-600 font-bold">CLIENT FEEDBACK</span>
+        <h2 class="text-3xl font-bold text-gray-800 dark:text-white mt-2">What Our <span class="text-blue-600">Clients Say</span></h2>
+        <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-4">
+          Hear from businesses that have transformed with our technology solutions
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover-zoom" data-aos="fade-up">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+              <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J." class="w-full h-full object-cover">
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-800 dark:text-white">Sarah J.</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">CEO, Fintech Solutions</p>
+            </div>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">
+            "GOOGI transformed our mobile banking app with cutting-edge security features. Their team delivered beyond expectations with a 40% performance improvement."
+          </p>
+          <div class="flex text-yellow-400">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
         </div>
         
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-            <div class="fade-in">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6">
-                    <span class="block">GOOGI</span>
-                    <span class="block text-blue-400">TECHNOLOGIES</span>
-                </h1>
-                <div class="text-xl md:text-2xl mb-8 h-16">
-                    <p class="typewriter">Innovating Africa's Digital Future</p>
-                </div>
-                <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
-                    Based in Dar es Salaam, Tanzania, we're pioneering the next generation of African technology solutions through software development, telecom services, and innovation incubation.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-all duration-300 pulse-glow">
-                        Start Your Project
-                    </button>
-                    <button class="px-8 py-4 border border-blue-400 hover:bg-blue-400 hover:text-gray-900 rounded-lg font-semibold transition-all duration-300">
-                        Join Incubation
-                    </button>
-                </div>
+        <!-- Testimonial 2 -->
+        <div class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover-zoom" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+              <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T." class="w-full h-full object-cover">
             </div>
-            
-            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-                <div class="scroll-indicator">
-                    <i class="fas fa-chevron-down text-2xl text-blue-400"></i>
-                </div>
+            <div>
+              <h4 class="font-bold text-gray-800 dark:text-white">Michael T.</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">CTO, HealthTech Ltd</p>
             </div>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">
+            "Their incubation program gave us the tools and funding to scale our health platform across East Africa. We've grown 300% in the first year."
+          </p>
+          <div class="flex text-yellow-400">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
         </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-20 bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="fade-in">
-                    <div class="counter" data-target="150">0</div>
-                    <p class="text-gray-400">Projects Delivered</p>
-                </div>
-                <div class="fade-in">
-                    <div class="counter" data-target="50">0</div>
-                    <p class="text-gray-400">Startups Incubated</p>
-                </div>
-                <div class="fade-in">
-                    <div class="counter" data-target="25">0</div>
-                    <p class="text-gray-400">Team Members</p>
-                </div>
-                <div class="fade-in">
-                    <div class="counter" data-target="5">0</div>
-                    <p class="text-gray-400">Years Experience</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Our Services</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    Comprehensive technology solutions designed to accelerate Africa's digital transformation
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="glass-effect p-8 rounded-xl hover:transform hover:scale-105 transition-all duration-300 floating-card">
-                    <div class="text-4xl mb-4 text-blue-400">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4">Software Development</h3>
-                    <p class="text-gray-400">Custom software solutions, web applications, and mobile apps built with cutting-edge technologies.</p>
-                </div>
-                
-                <div class="glass-effect p-8 rounded-xl hover:transform hover:scale-105 transition-all duration-300 floating-card">
-                    <div class="text-4xl mb-4 text-purple-400">
-                        <i class="fas fa-broadcast-tower"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4">Telecom Services</h3>
-                    <p class="text-gray-400">Advanced telecommunications infrastructure and solutions for modern connectivity needs.</p>
-                </div>
-                
-                <div class="glass-effect p-8 rounded-xl hover:transform hover:scale-105 transition-all duration-300 floating-card">
-                    <div class="text-4xl mb-4 text-green-400">
-                        <i class="fas fa-users-cog"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4">IT Consultancy</h3>
-                    <p class="text-gray-400">Strategic technology consulting to optimize your business operations and digital transformation.</p>
-                </div>
-                
-                <div class="glass-effect p-8 rounded-xl hover:transform hover:scale-105 transition-all duration-300 floating-card">
-                    <div class="text-4xl mb-4 text-yellow-400">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4">Innovation Hub</h3>
-                    <p class="text-gray-400">Technology incubation center fostering the next generation of African tech startups.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6">About GOOGI</h2>
-                    <p class="text-lg text-gray-300 mb-6">
-                        Founded in Dar es Salaam, Tanzania, GOOGI Technologies stands at the forefront of Africa's digital revolution. We're not just building software – we're crafting the digital infrastructure that will power Africa's future.
-                    </p>
-                    <p class="text-lg text-gray-300 mb-8">
-                        Our mission is to bridge the technology gap across Africa by providing world-class software solutions, robust telecom infrastructure, strategic IT consulting, and nurturing the next generation of tech innovators through our incubation programs.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <span class="px-4 py-2 bg-blue-600 rounded-full text-sm">Innovation</span>
-                        <span class="px-4 py-2 bg-purple-600 rounded-full text-sm">Excellence</span>
-                        <span class="px-4 py-2 bg-green-600 rounded-full text-sm">Impact</span>
-                        <span class="px-4 py-2 bg-yellow-600 rounded-full text-sm">Growth</span>
-                    </div>
-                </div>
-                <div class="relative">
-                    <div class="glass-effect p-8 rounded-xl">
-                        <div class="space-y-6">
-                            <div class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-blue-400 text-xl mr-4"></i>
-                                <span>Dar es Salaam, Tanzania</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-calendar text-purple-400 text-xl mr-4"></i>
-                                <span>Established 2019</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-globe text-green-400 text-xl mr-4"></i>
-                                <span>Pan-African Vision</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-rocket text-yellow-400 text-xl mr-4"></i>
-                                <span>Future-Focused</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Featured Projects</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    Showcasing our impact across various sectors and industries
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-effect rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
-                    <div class="h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                        <i class="fas fa-mobile-alt text-6xl text-white"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">FinTech Mobile App</h3>
-                        <p class="text-gray-400 mb-4">Revolutionary mobile banking solution serving 100K+ users across East Africa.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-blue-600 rounded text-xs">React Native</span>
-                            <span class="px-2 py-1 bg-green-600 rounded text-xs">Node.js</span>
-                            <span class="px-2 py-1 bg-purple-600 rounded text-xs">MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glass-effect rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
-                    <div class="h-48 bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center">
-                        <i class="fas fa-hospital text-6xl text-white"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Healthcare Management</h3>
-                        <p class="text-gray-400 mb-4">Comprehensive hospital management system deployed across 50+ healthcare facilities.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-blue-600 rounded text-xs">Vue.js</span>
-                            <span class="px-2 py-1 bg-yellow-600 rounded text-xs">Python</span>
-                            <span class="px-2 py-1 bg-red-600 rounded text-xs">PostgreSQL</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glass-effect rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
-                    <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
-                        <i class="fas fa-graduation-cap text-6xl text-white"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">EdTech Platform</h3>
-                        <p class="text-gray-400 mb-4">E-learning platform connecting 25K+ students with quality education resources.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-blue-600 rounded text-xs">Angular</span>
-                            <span class="px-2 py-1 bg-green-600 rounded text-xs">Express</span>
-                            <span class="px-2 py-1 bg-orange-600 rounded text-xs">MySQL</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    Ready to start your next project or join our incubation program? Let's build the future together.
-                </p>
-            </div>
-            
-            <div class="grid lg:grid-cols-2 gap-12">
-                <div>
-                    <div class="space-y-8">
-                        <div class="flex items-start">
-                            <i class="fas fa-map-marker-alt text-blue-400 text-2xl mr-6 mt-1"></i>
-                            <div>
-                                <h3 class="text-lg font-semibold mb-2">Our Location</h3>
-                                <p class="text-gray-400">Dar es Salaam, Tanzania<br>East Africa Technology Hub</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <i class="fas fa-envelope text-purple-400 text-2xl mr-6 mt-1"></i>
-                            <div>
-                                <h3 class="text-lg font-semibold mb-2">Email Us</h3>
-                                <p class="text-gray-400">hello@googitech.co.tz<br>partnerships@googitech.co.tz</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <i class="fas fa-phone text-green-400 text-2xl mr-6 mt-1"></i>
-                            <div>
-                                <h3 class="text-lg font-semibold mb-2">Call Us</h3>
-                                <p class="text-gray-400">+255 123 456 789<br>+255 987 654 321</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glass-effect p-8 rounded-xl">
-                    <form class="space-y-6" id="contactForm">
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" placeholder="First Name" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            <input type="text" placeholder="Last Name" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                        </div>
-                        <input type="email" placeholder="Email Address" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                        <input type="tel" placeholder="Phone Number" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        <select class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            <option value="">Select Service Interest</option>
-                            <option value="software">Software Development</option>
-                            <option value="telecom">Telecom Services</option>
-                            <option value="consulting">IT Consultancy</option>
-                            <option value="incubation">Innovation Incubation</option>
-                        </select>
-                        <textarea placeholder="Tell us about your project..." rows="4" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
-                        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-all duration-300 pulse-glow">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 bg-gray-900 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-code text-blue-400 mr-2"></i>
-                        <span class="text-xl font-bold">GOOGI</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">Innovating Africa's Digital Future through cutting-edge technology solutions.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-                            <i class="fab fa-facebook text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Services</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-blue-400 transition-colors duration-300">Software Development</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition-colors duration-300">Telecom Services</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition-colors duration-300">IT Consultancy</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition-colors duration-300">Innovation Hub</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Company</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-blue-400 transition-colors duration-300">About Us</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition-colors duration-300">Our Team</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition-colors duration-300">Careers</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition-colors duration-300">Blog</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>Dar es Salaam, Tanzania</li>
-                        <li>hello@googitech.co.tz</li>
-                        <li>+255 123 456 789</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 GOOGI Technologies. All rights reserved. | Innovating Africa's Digital Future</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
         
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        <!-- Testimonial 3 -->
+        <div class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover-zoom" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Amina K." class="w-full h-full object-cover">
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-800 dark:text-white">Amina K.</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">Director, Telecom Tanzania</p>
+            </div>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">
+            "Reliable telecom infrastructure with 99.9% uptime. GOOGI's team are true professionals who delivered our 5G rollout ahead of schedule."
+          </p>
+          <div class="flex text-yellow-400">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+      </div>
+      
+      <!-- More Testimonials Button -->
+      <div class="text-center mt-12" data-aos="fade-up">
+        <a href="#" class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">
+          View More Testimonials
+          <svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
 
-        // Navbar background on scroll
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.style.backgroundColor = 'rgba(17, 24, 39, 0.95)';
-            } else {
-                navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-            }
-        });
+  <!-- CTA Section -->
+  <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+    <div class="container mx-auto px-6 text-center" data-aos="fade-up">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Business?</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">
+        Whether you need custom software, telecom solutions, or startup support, we've got you covered.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#contact" class="ripple px-8 py-4 bg-white text-blue-600 rounded-lg font-bold hover:shadow-lg transition-all transform hover:-translate-y-1">
+          Get Started Today
+        </a>
+        <a href="tel:+255123456789" class="ripple px-8 py-4 border-2 border-white text-white rounded-lg font-bold hover:bg-white/10 transition">
+          <i class="fas fa-phone-alt mr-2"></i> Call Us Now
+        </a>
+      </div>
+    </div>
+  </section>
 
-        // Counter animation
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px 0px -100px 0px'
-        };
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-blue-600 font-bold">GET IN TOUCH</span>
+        <h2 class="text-3xl font-bold text-gray-800 dark:text-white mt-2">Contact <span class="text-blue-600">Our Team</span></h2>
+        <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-4">
+          Have a project in mind or need technical consultation? Reach out to our experts.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-12">
+        <div data-aos="fade-right">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">Our Office</h3>
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4 mt-1">
+                <i class="fas fa-map-marker-alt text-blue-600 dark:text-blue-300"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-800 dark:text-white">Headquarters</h4>
+                <p class="text-gray-600 dark:text-gray-300">Mikocheni B, Dar es Salaam, Tanzania</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4 mt-1">
+                <i class="fas fa-envelope text-blue-600 dark:text-blue-300"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-800 dark:text-white">Email Us</h4>
+                <p class="text-gray-600 dark:text-gray-300">info@googitech.co.tz</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4 mt-1">
+                <i class="fas fa-phone-alt text-blue-600 dark:text-blue-300"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-800 dark:text-white">Call Us</h4>
+                <p class="text-gray-600 dark:text-gray-300">+255 123 456 789</p>
+              </div>
+            </div>
+          </div>
+          
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mt-10 mb-6">Business Hours</h3>
+          <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+            <div class="flex justify-between py-3 border-b border-gray-200 dark:border-gray-700">
+              <span class="text-gray-600 dark:text-gray-300">Monday - Friday</span>
+              <span class="font-medium text-gray-800 dark:text-white">8:00 AM - 5:00 PM</span>
+            </div>
+            <div class="flex justify-between py-3">
+              <span class="text-gray-600 dark:text-gray-300">Saturday - Sunday</span>
+              <span class="font-medium text-gray-800 dark:text-white">Closed</span>
+            </div>
+          </div>
+        </div>
+        
+        <div data-aos="fade-left">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">Send Us a Message</h3>
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-gray-600 dark:text-gray-300 mb-2">Name</label>
+                <input type="text" id="name" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-800 dark:border-gray-700">
+              </div>
+              <div>
+                <label for="email" class="block text-gray-600 dark:text-gray-300 mb-2">Email</label>
+                <input type="email" id="email" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-800 dark:border-gray-700">
+              </div>
+            </div>
+            <div>
+              <label for="subject" class="block text-gray-600 dark:text-gray-300 mb-2">Subject</label>
+              <input type="text" id="subject" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-800 dark:border-gray-700">
+            </div>
+            <div>
+              <label for="message" class="block text-gray-600 dark:text-gray-300 mb-2">Message</label>
+              <textarea id="message" rows="5" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-800 dark:border-gray-700"></textarea>
+            </div>
+            <button type="submit" class="w-full py-4 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition ripple">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counters = entry.target.querySelectorAll('.counter');
-                    counters.forEach(counter => {
-                        const target = parseInt(counter.getAttribute('data-target'));
-                        let current = 0;
-                        const increment = target / 100;
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                counter.textContent = target + '+';
-                                clearInterval(timer);
-                            } else {
-                                counter.textContent = Math.floor(current) + '+';
-                            }
-                        }, 20);
-                    });
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+  <!-- Footer -->
+  <footer class="bg-gray-100 dark:bg-gray-800 py-12">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-12">
+        <div>
+          <a href="#" class="flex items-center space-x-2 mb-4">
+            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">G</div>
+            <span class="text-xl font-bold text-gray-800 dark:text-white">GOOGI TECHNOLOGIES</span>
+          </a>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">
+            Innovating Africa's digital future through cutting-edge technology solutions.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">Quick Links</h3>
+          <ul class="space-y-3">
+            <li><a href="#home" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Home</a></li>
+            <li><a href="#services" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Services</a></li>
+            <li><a href="#achievements" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Achievements</a></li>
+            <li><a href="#testimonials" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Testimonials</a></li>
+            <li><a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">Services</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Software Development</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Mobile Applications</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Cloud Solutions</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Cyber Security</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Tech Incubation</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">Newsletter</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">
+            Subscribe to our newsletter for the latest updates and tech insights.
+          </p>
+          <form class="flex">
+            <input type="email" placeholder="Your email" class="px-4 py-3 rounded-l-lg border focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-700 dark:border-gray-600 w-full">
+            <button type="submit" class="px-4 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <hr class="my-8 border-gray-300 dark:border-gray-700">
+      
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-600 dark:text-gray-300 mb-4 md:mb-0">
+          © 2023 GOOGI Technologies. All rights reserved.
+        </p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Privacy Policy</a>
+          <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Terms of Service</a>
+          <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-        // Observe stats section
-        const statsSection = document.querySelector('.grid.grid-cols-2.md\\:grid-cols-4');
-        if (statsSection) {
-            observer.observe(statsSection);
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible hover:bg-blue-700">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <!-- Main JavaScript -->
+  <script>
+    // Preloader
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      gsap.to(preloader, {
+        opacity: 0,
+        duration: 0.5,
+        onComplete: () => preloader.style.display = 'none'
+      });
+      
+      // Initialize animations after load
+      initAnimations();
+    });
+
+    function initAnimations() {
+      // Initialize AOS
+      AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+      });
+
+      // Initialize Swiper
+      const swiper = new Swiper('.certificates-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          640: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 }
         }
+      });
 
-        // Scroll animations for fade-in elements
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationDelay = Math.random() * 0.5 + 's';
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, {
-            threshold: 0.1
+      // Dark/Light Theme Toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      
+      // Check for saved theme or system preference
+      const savedTheme = localStorage.getItem('theme') || 
+                        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      
+      if (savedTheme === 'dark') html.classList.add('dark');
+      
+      themeToggle.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+      });
+
+      // Counter Animation
+      const counters = document.querySelectorAll('.counter');
+      const speed = 200;
+      
+      const animateCounters = () => {
+        counters.forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+          const increment = target / speed;
+          
+          if (count < target) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(animateCounters, 1);
+          } else {
+            counter.innerText = target.toLocaleString();
+          }
         });
-
-        fadeElements.forEach(element => {
-            fadeObserver.observe(element);
+      };
+      
+      // Start counters when in view
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            observer.unobserve(entry.target);
+          }
         });
+      }, { threshold: 0.5 });
+      
+      counters.forEach(counter => observer.observe(counter));
 
-        // Contact form handling
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show loading state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            // Simulate form submission
-            setTimeout(() => {
-                submitBtn.textContent = 'Message Sent!';
-                submitBtn.style.backgroundColor = '#10b981';
-                
-                // Reset form
-                setTimeout(() => {
-                    this.reset();
-                    submitBtn.textContent = originalText;
-                    submitBtn.style.backgroundColor = '';
-                    submitBtn.disabled = false;
-                }, 2000);
-            }, 1500);
+      // Ripple Effect
+      document.querySelectorAll('.ripple').forEach(button => {
+        button.addEventListener('click', function(e) {
+          const x = e.clientX - e.target.getBoundingClientRect().left;
+          const y = e.clientY - e.target.getBoundingClientRect().top;
+          
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple-effect');
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
+          
+          this.appendChild(ripple);
+          
+          setTimeout(() => ripple.remove(), 600);
         });
+      });
 
-        // Add dynamic particle background
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'fixed pointer-events-none z-0';
-            particle.style.width = Math.random() * 4 + 1 + 'px';
-            particle.style.height = particle.style.width;
-            particle.style.background = `rgba(102, 126, 234, ${Math.random() * 0.5 + 0.1})`;
-            particle.style.borderRadius = '50%';
-            particle.style.left = Math.random() * window.innerWidth + 'px';
-            particle.style.top = window.innerHeight + 'px';
-            particle.style.animation = `float-up ${Math.random() * 3 + 2}s linear forwards`;
-            
-            document.body.appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-            }, 5000);
+      // Back to Top Button
+      const backToTop = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.remove('opacity-0', 'invisible');
+          backToTop.classList.add('opacity-100', 'visible');
+        } else {
+          backToTop.classList.remove('opacity-100', 'visible');
+          backToTop.classList.add('opacity-0', 'invisible');
         }
+      });
+      
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
 
-        // Add CSS for floating particles
-        const particleStyles = document.createElement('style');
-        particleStyles.textContent = `
-            @keyframes float-up {
-                to {
-                    transform: translateY(-${window.innerHeight + 100}px);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(particleStyles);
+      // Mobile Menu Toggle
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
 
-        // Create particles periodically
-        setInterval(createParticle, 300);
-
-        // Add hover effects to service cards
-        const serviceCards = document.querySelectorAll('.glass-effect');
-        serviceCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-                this.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
+      // Smooth Scrolling for Nav Links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
             });
             
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-                this.style.boxShadow = '';
-            });
+            // Close mobile menu if open
+            mobileMenu.classList.add('hidden');
+          }
         });
+      });
 
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.floating-card');
-            
-            parallaxElements.forEach((element, index) => {
-                const speed = 0.5 + (index * 0.1);
-                element.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-
-        // Text reveal animation on scroll
-        const revealText = document.querySelectorAll('h2, h3, p');
-        const textObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        revealText.forEach(text => {
-            text.style.opacity = '0';
-            text.style.transform = 'translateY(20px)';
-            text.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            textObserver.observe(text);
-        });
-
-        // Dynamic typing effect for multiple phrases
-        const phrases = [
-            "Innovating Africa's Digital Future",
-            "Building Tomorrow's Technology Today",
-            "Empowering African Innovation",
-            "Creating Digital Solutions That Matter"
-        ];
-        
-        let currentPhrase = 0;
-        const typewriterElement = document.querySelector('.typewriter');
-        
-        function typePhrase(phrase, element) {
-            element.textContent = '';
-            element.style.width = '0';
-            
-            setTimeout(() => {
-                element.style.width = '100%';
-                let i = 0;
-                const typing = setInterval(() => {
-                    element.textContent += phrase.charAt(i);
-                    i++;
-                    if (i >= phrase.length) {
-                        clearInterval(typing);
-                        setTimeout(() => {
-                            currentPhrase = (currentPhrase + 1) % phrases.length;
-                            typePhrase(phrases[currentPhrase], element);
-                        }, 3000);
-                    }
-                }, 100);
-            }, 500);
-        }
-
-        // Start the typing animation after initial load
-        setTimeout(() => {
-            typePhrase(phrases[currentPhrase], typewriterElement);
-        }, 3000);
-
-        // Add glow effect to buttons on hover
-        const buttons = document.querySelectorAll('button');
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.5)';
-            });
-            
-            button.addEventListener('mouseleave', function() {
-                if (!this.classList.contains('pulse-glow')) {
-                    this.style.boxShadow = '';
-                }
-            });
-        });
-
-        // Initialize animations on page load
-        window.addEventListener('load', () => {
-            // Trigger initial animations
-            document.querySelector('#home .fade-in').style.animationDelay = '0.5s';
-            
-            // Add entrance animation to navbar
-            const navbar = document.getElementById('navbar');
-            navbar.style.transform = 'translateY(-100%)';
-            navbar.style.transition = 'transform 0.8s ease';
-            setTimeout(() => {
-                navbar.style.transform = 'translateY(0)';
-            }, 100);
-        });
-
-        // Add scroll progress indicator
-        const scrollProgress = document.createElement('div');
-        scrollProgress.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            z-index: 1000;
-            transition: width 0.1s ease;
-        `;
-        document.body.appendChild(scrollProgress);
-
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            scrollProgress.style.width = scrolled + '%';
-        });
-    </script>
+      // Hero Animation
+      gsap.from('nav', { opacity: 0, y: -50, duration: 0.8 });
+      gsap.from('#home h1', { opacity: 0, y: 50, duration: 0.8, delay: 0.3 });
+      gsap.from('#home p', { opacity: 0, y: 50, duration: 0.8, delay: 0.5 });
+      gsap.from('#home a', { opacity: 0, y: 50, duration: 0.8, delay: 0.7, stagger: 0.1 });
+      gsap.from('#home img', { opacity: 0, x: 50, duration: 0.8, delay: 0.5 });
+    }
+  </script>
 </body>
 </html>
